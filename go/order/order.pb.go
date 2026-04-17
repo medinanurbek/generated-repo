@@ -9,6 +9,7 @@ package order
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -69,7 +70,7 @@ type OrderStatusUpdate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,3,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -118,25 +119,25 @@ func (x *OrderStatusUpdate) GetStatus() string {
 	return ""
 }
 
-func (x *OrderStatusUpdate) GetUpdatedAt() string {
+func (x *OrderStatusUpdate) GetUpdatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdatedAt
 	}
-	return ""
+	return nil
 }
 
 var File_order_order_proto protoreflect.FileDescriptor
 
 const file_order_order_proto_rawDesc = "" +
 	"\n" +
-	"\x11order/order.proto\x12\x05order\")\n" +
+	"\x11order/order.proto\x12\x05order\x1a\x1fgoogle/protobuf/timestamp.proto\")\n" +
 	"\fOrderRequest\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\tR\aorderId\"e\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\"\x81\x01\n" +
 	"\x11OrderStatusUpdate\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x16\n" +
-	"\x06status\x18\x02 \x01(\tR\x06status\x12\x1d\n" +
+	"\x06status\x18\x02 \x01(\tR\x06status\x129\n" +
 	"\n" +
-	"updated_at\x18\x03 \x01(\tR\tupdatedAt2Z\n" +
+	"updated_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt2Z\n" +
 	"\fOrderService\x12J\n" +
 	"\x17SubscribeToOrderUpdates\x12\x13.order.OrderRequest\x1a\x18.order.OrderStatusUpdate0\x01B1Z/github.com/medinanurbek/generated-repo/go/orderb\x06proto3"
 
@@ -154,17 +155,19 @@ func file_order_order_proto_rawDescGZIP() []byte {
 
 var file_order_order_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_order_order_proto_goTypes = []any{
-	(*OrderRequest)(nil),      // 0: order.OrderRequest
-	(*OrderStatusUpdate)(nil), // 1: order.OrderStatusUpdate
+	(*OrderRequest)(nil),          // 0: order.OrderRequest
+	(*OrderStatusUpdate)(nil),     // 1: order.OrderStatusUpdate
+	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
 }
 var file_order_order_proto_depIdxs = []int32{
-	0, // 0: order.OrderService.SubscribeToOrderUpdates:input_type -> order.OrderRequest
-	1, // 1: order.OrderService.SubscribeToOrderUpdates:output_type -> order.OrderStatusUpdate
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: order.OrderStatusUpdate.updated_at:type_name -> google.protobuf.Timestamp
+	0, // 1: order.OrderService.SubscribeToOrderUpdates:input_type -> order.OrderRequest
+	1, // 2: order.OrderService.SubscribeToOrderUpdates:output_type -> order.OrderStatusUpdate
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_order_order_proto_init() }
