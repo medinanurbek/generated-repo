@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout Generated Repo
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Install Protoc
         run: sudo apt-get install -y protobuf-compiler golang-goprotobuf-dev
@@ -25,11 +23,8 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Clone Proto Files Repository
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          # Используем PAT для клонирования, если репозиторий приватный
-          git clone https://${PAT_TOKEN}@github.com/medinanurbek/proto-repo.git protos
+          git clone https://github.com/medinanurbek/protos-reprository.git protos
 
       - name: Generate Go Code from Proto Files
         run: |
@@ -37,13 +32,15 @@ jobs:
           protoc --proto_path=protos/proto \
             --go_out=go --go_opt=paths=source_relative \
             --go-grpc_out=go --go-grpc_opt=paths=source_relative \
-            protos/proto/payment/payment.proto \
-            protos/proto/order/order.proto
+            payment/payment.proto \
+            order/order.proto
 
       - name: Push to Generated Repo
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
+          git config --global user.email "medinanurbek@example.com"
+          git config --global user.name "medinanurbek"
           git add .
           git commit -m "chore: generate code from proto" || echo "No changes to commit"
           git push origin main
