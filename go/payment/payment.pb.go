@@ -145,6 +145,7 @@ type ListPaymentsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	MinAmount     int64                  `protobuf:"varint,1,opt,name=min_amount,json=minAmount,proto3" json:"min_amount,omitempty"` // in cents, 0 = unlimited
 	MaxAmount     int64                  `protobuf:"varint,2,opt,name=max_amount,json=maxAmount,proto3" json:"max_amount,omitempty"` // in cents, 0 = unlimited
+	Status        string                 `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`                         // "Authorized" или "Declined"
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -191,6 +192,13 @@ func (x *ListPaymentsRequest) GetMaxAmount() int64 {
 		return x.MaxAmount
 	}
 	return 0
+}
+
+func (x *ListPaymentsRequest) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
 }
 
 type ListPaymentsResponse struct {
@@ -249,12 +257,13 @@ const file_payment_payment_proto_rawDesc = "" +
 	"\x0fPaymentResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\x12%\n" +
 	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12\x16\n" +
-	"\x06amount\x18\x03 \x01(\x01R\x06amount\"S\n" +
+	"\x06amount\x18\x03 \x01(\x01R\x06amount\"k\n" +
 	"\x13ListPaymentsRequest\x12\x1d\n" +
 	"\n" +
 	"min_amount\x18\x01 \x01(\x03R\tminAmount\x12\x1d\n" +
 	"\n" +
-	"max_amount\x18\x02 \x01(\x03R\tmaxAmount\"L\n" +
+	"max_amount\x18\x02 \x01(\x03R\tmaxAmount\x12\x16\n" +
+	"\x06status\x18\x03 \x01(\tR\x06status\"L\n" +
 	"\x14ListPaymentsResponse\x124\n" +
 	"\bpayments\x18\x01 \x03(\v2\x18.payment.PaymentResponseR\bpayments2\xa2\x01\n" +
 	"\x0ePaymentService\x12C\n" +
