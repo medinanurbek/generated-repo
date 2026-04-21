@@ -85,6 +85,7 @@ type PaymentResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
 	TransactionId string                 `protobuf:"bytes,2,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	Amount        float64                `protobuf:"fixed64,3,opt,name=amount,proto3" json:"amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -131,6 +132,13 @@ func (x *PaymentResponse) GetTransactionId() string {
 		return x.TransactionId
 	}
 	return ""
+}
+
+func (x *PaymentResponse) GetAmount() float64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
 }
 
 type ListPaymentsRequest struct {
@@ -237,10 +245,11 @@ const file_payment_payment_proto_rawDesc = "" +
 	"\x0ePaymentRequest\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x16\n" +
 	"\x06amount\x18\x02 \x01(\x01R\x06amount\x12\x1a\n" +
-	"\bcurrency\x18\x03 \x01(\tR\bcurrency\"P\n" +
+	"\bcurrency\x18\x03 \x01(\tR\bcurrency\"h\n" +
 	"\x0fPaymentResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\x12%\n" +
-	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\"S\n" +
+	"\x0etransaction_id\x18\x02 \x01(\tR\rtransactionId\x12\x16\n" +
+	"\x06amount\x18\x03 \x01(\x01R\x06amount\"S\n" +
 	"\x13ListPaymentsRequest\x12\x1d\n" +
 	"\n" +
 	"min_amount\x18\x01 \x01(\x03R\tminAmount\x12\x1d\n" +
